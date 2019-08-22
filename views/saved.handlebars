@@ -19,17 +19,23 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add a comment</h5>
+        <h5 class="modal-title">Comments about the article</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p></p>
+        <div id="comments">
+        </div>
       </div>
+     
+         <div class="form-group p-5">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" data-id={{this._id}}id="addNote"class="btn btn-primary">Add Note</button>
+        <button type="button" data-id={{this._id}} id="addNote" class="btn btn-primary">Add Note</button>
       </div>
     </div>
   </div>

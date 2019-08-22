@@ -1,8 +1,10 @@
+require("dotenv").config()
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 var path =require("path")
+
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/gamescraper"
 
 

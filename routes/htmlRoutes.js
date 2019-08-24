@@ -101,7 +101,7 @@ module.exports=function(app){
     app.post("/addNote/:id",function(req,resp){
         db.Note.create(req.body)
         .then(function(dbNote){
-            return db.Article.find({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, {$push:{ note: dbNote._id }}, { new: true });
         }).then(function(dbArticle){
             resp.json(dbArticle);
         })
@@ -110,14 +110,20 @@ module.exports=function(app){
         })
     })
 
-    app.get("/allNotes/:id",function(req,resp){
-        db.Article.findOne({_id:req.params.id})
+    app.get("/allNotes/:id",function(req,res){
+        db.Article.findOne({ _id: req.params.id })
         .populate("note")
-        .then(function(data){
-            resp.json(data)
+        .then(function (dbArticle) {
+            res.json(dbArticle);
         })
-        .catch(function(err){
-            resp.json(err)
+        .catch(function (err) {
+            res.json(err);
+        });
+    })
+    app.post("/deleteNote/:id",function(req,resp){
+        var id =req.params.id
+        db.Note.remove({_id:id}).then(function(data){
+            resp.sendStatus(200)
         })
     })
 }

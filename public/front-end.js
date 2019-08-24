@@ -77,17 +77,38 @@ $(".addNotes").on("click",function(){
     noteRow.addClass("bg-none")
     $.get("/allNotes/"+id,function(data){
         if(data){
-            console.log(data)
+            console.log(data.note)
+            data.note.forEach(element => {
             var h1=$("<h1>")
             var h3=$("<h3>")
-            h1.text(data.note.title)
-            h3.text(data.note.body)
-            h1.appendTo(noteRow)
-            h3.appendTo(noteRow)
+            var row=$("<div>")
+            var button=$("<button>")
+            button.text("Delete")
+            button.addClass("deleteNote btn btn-danger")
+            button.attr("id",element._id)
+            h1.text(element.title)
+            h3.text(element.body)
+            h1.appendTo(row)
+            h1.addClass("text-primary")
+            h3.appendTo(row)
+            h3.addClass("text-white")
+            button.appendTo(row)
             h1.css("text-decoration","underline")
-            noteRow.addClass("bg-secondary p-3 text-white rounded")
-            noteRow.css("box-shadow","black 3px 3px 3px")
+            row.addClass("bg-secondary my-2 p-3 rounded")
+            row.css("box-shadow","black 3px 3px 3px")
+            row.appendTo(noteRow)
             console.log("comments successfully added")
+            });
+        }
+    })
+})
+
+$(".deleteNote").on("click",function(){
+    let id= $(this).data("id")
+    console.log("clicked")
+    $.post("/deleteNote/"+id).then(function(data){
+        if(data){
+            location.reload();
         }
     })
 })

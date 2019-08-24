@@ -98,4 +98,26 @@ module.exports=function(app){
             console.log(err)
         })
     })
+    app.post("/addNote/:id",function(req,resp){
+        db.Note.create(req.body)
+        .then(function(dbNote){
+            return db.Article.find({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        }).then(function(dbArticle){
+            resp.json(dbArticle);
+        })
+        .catch(function(err){
+            resp.json(err)
+        })
+    })
+
+    app.get("/allNotes/:id",function(req,resp){
+        db.Article.findOne({_id:req.params.id})
+        .populate("note")
+        .then(function(data){
+            resp.json(data)
+        })
+        .catch(function(err){
+            resp.json(err)
+        })
+    })
 }

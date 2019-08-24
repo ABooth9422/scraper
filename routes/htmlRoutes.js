@@ -122,7 +122,7 @@ module.exports=function(app){
     })
     app.post("/deleteNote/:id",function(req,resp){
         var id =req.params.id
-        db.Note.remove({_id:id}).then(function(data){
+        db.Note.findByIdAndRemove({_id:id}).then(function(err,data){
             resp.sendStatus(200)
         })
     })

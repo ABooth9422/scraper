@@ -1,4 +1,5 @@
 
+
 $("#scrape").on("click",function(){
     var timer
     $("#load").show()
@@ -85,7 +86,7 @@ $(".addNotes").on("click",function(){
             var button=$("<button>")
             button.text("Delete")
             button.addClass("deleteNote btn btn-danger")
-            button.attr("id",element._id)
+            button.attr("test",element._id)
             h1.text(element.title)
             h3.text(element.body)
             h1.appendTo(row)
@@ -99,16 +100,15 @@ $(".addNotes").on("click",function(){
             row.appendTo(noteRow)
             console.log("comments successfully added")
             });
-        }
-    })
-})
-
-$(".deleteNote").on("click",function(){
-    let id= $(this).data("id")
-    console.log("clicked")
-    $.post("/deleteNote/"+id).then(function(data){
-        if(data){
-            location.reload();
+            $(".deleteNote").on("click",function(){
+                let id= $(this).attr("test")
+                console.log(id)
+                $.post("/deleteNote/"+id).then(function(data){
+                    if(data){
+                        $("#exampleModal").modal("hide")
+                    }
+                })
+            })
         }
     })
 })
